@@ -95,8 +95,8 @@ def _sqrt_positive_part(x: torch.Tensor) -> torch.Tensor:
     but with a zero subgradient where x is 0.
     """
     positive_mask = x > 0
-    safe_x = torch.where(positive_mask, x, 1.0)
-    return torch.where(positive_mask, torch.sqrt(safe_x), 0.0)
+    safe_x = torch.where(positive_mask, x, torch.ones_like(x))
+    return torch.where(positive_mask, torch.sqrt(safe_x), torch.zeros_like(x))
 
 
 def matrix_to_quaternion(matrix: torch.Tensor) -> torch.Tensor:
